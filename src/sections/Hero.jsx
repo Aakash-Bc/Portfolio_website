@@ -63,18 +63,35 @@ const Hero = () => {
         >
           <div className="glow-circle"></div>
           {/* We can add a 3D element or Image here later */}
-          <div className="code-block-decoration">
+          <motion.div 
+            className="code-block-decoration"
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: [-6, 6, -6],
+            }}
+            whileHover={{ 
+              scale: 1.05,
+              rotate: 0,
+              y: 0,
+              transition: { duration: 0.3 }
+            }}
+            transition={{ 
+              duration: 5, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          >
             <pre>
               <code>
                 <span className="keyword">const</span> developer = {'{'}
                 {'\n'}  name: <span className="string">'Aakash'</span>,
-                {'\n'}  skills: [<span className="string">'React'</span>, <span className="string">'Express.js'</span>, <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>]
-                {'\n'}  hardWorker: <span className="boolean">true</span>
+                {'\n'}  skills: [<span className="string">'React'</span>, <span className="string">'Express.js'</span>, <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>],
+                {'\n'}  hardWorker: <span className="boolean">true</span>,
                 {'\n'}  openToWork: <span className="boolean">true</span>
                 {'\n'}{'}'}
               </code>
             </pre>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -184,7 +201,7 @@ const Hero = () => {
         }
 
         .code-block-decoration:hover {
-          transform: rotate(0deg) scale(1.02);
+          /* Handled by Framer Motion whileHover */
         }
 
         .keyword { color: var(--accent-secondary); }

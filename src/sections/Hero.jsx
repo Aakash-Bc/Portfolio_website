@@ -81,6 +81,11 @@ const Hero = () => {
               ease: "easeInOut" 
             }}
           >
+            <div className="code-header">
+              <span className="dot dot-red"></span>
+              <span className="dot dot-yellow"></span>
+              <span className="dot dot-green"></span>
+            </div>
             <pre>
               <code>
                 <span className="keyword">const</span> developer = {'{'}
@@ -140,14 +145,14 @@ const Hero = () => {
         }
 
         .hero-title {
-          font-size: 4rem;
-          line-height: 1.1;
+          font-size: clamp(2.5rem, 10vw, 4.5rem);
+          line-height: 1.05;
           margin-bottom: 1.5rem;
           font-weight: 800;
         }
 
         .hero-subtitle {
-          font-size: 1.5rem;
+          font-size: clamp(1.1rem, 4vw, 1.6rem);
           color: var(--text-secondary);
           margin-bottom: 1.5rem;
           font-weight: 500;
@@ -155,53 +160,82 @@ const Hero = () => {
 
         .hero-description {
           color: var(--text-secondary);
-          max-width: 500px;
+          max-width: 550px;
           margin-bottom: 2.5rem;
-          font-size: 1.1rem;
+          font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
 
         .hero-buttons {
           display: flex;
-          gap: 1rem;
+          gap: 1.25rem;
           margin-bottom: 2rem;
-          cursor: pointer;
+          flex-wrap: wrap;
         }
 
         .hero-visual {
           position: relative;
           display: flex;
           justify-content: center;
+          align-items: center;
         }
 
         .glow-circle {
           position: absolute;
-          width: 300px;
-          height: 300px;
+          width: clamp(200px, 40vw, 400px);
+          height: clamp(200px, 40vw, 400px);
           background: var(--accent-primary);
           border-radius: 50%;
           filter: blur(80px);
-          opacity: 0.2;
+          opacity: 0.15;
           z-index: -1;
         }
 
         .code-block-decoration {
-          background: var(--bg-card);
+          background: rgba(20, 20, 22, 0.8);
+          backdrop-filter: blur(12px);
           padding: 2rem;
           border-radius: var(--border-radius-md);
           border: 1px solid rgba(255,255,255,0.1);
           font-family: 'Fira Code', monospace;
           box-shadow: 0 20px 50px rgba(0,0,0,0.3);
           transform: rotate(-5deg);
-          transition: transform 0.3s ease;
+          transition: all 0.3s ease;
+          position: relative;
+          width: 100%;
+          max-width: 520px;
         }
+
+        .code-header {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 1.5rem;
+        }
+
+        .dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
 
         .code-block-decoration pre {
           margin: 0;
-          overflow: visible;
+          overflow-x: auto;
+          scrollbar-width: thin;
+          scrollbar-color: var(--bg-card) transparent;
+          font-size: inherit;
         }
 
-        .code-block-decoration:hover {
-          /* Handled by Framer Motion whileHover */
+        .code-block-decoration pre::-webkit-scrollbar {
+          height: 4px;
+        }
+
+        .code-block-decoration pre::-webkit-scrollbar-thumb {
+          background: var(--bg-card);
+          border-radius: 10px;
         }
 
         .keyword { color: var(--accent-secondary); }
@@ -211,97 +245,74 @@ const Hero = () => {
         @media (max-width: 968px) {
           .hero-section {
             padding-top: 100px;
-            padding-bottom: 3rem;
+            padding-bottom: 4rem;
             min-height: auto;
             text-align: center;
           }
 
           .hero-content {
             grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-
-          .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-          }
-
-          .hero-subtitle {
-            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            gap: 4rem;
           }
 
           .hero-description {
-            margin: 0 auto 2rem;
-            font-size: 1rem;
-            max-width: 100%;
+            margin: 0 auto 2.5rem;
           }
 
           .hero-buttons {
             justify-content: center;
-            flex-direction: column;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto 2rem;
-          }
-
-          .btn {
-            width: 100%;
-            justify-content: center;
           }
 
           .hero-visual {
-            margin-bottom: 2rem;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
+            padding: 0 1rem;
           }
 
           .code-block-decoration {
             transform: none;
-            width: 100%;
-            max-width: 100%;
-            font-size: 0.8rem;
-            padding: 1.25rem;
-            text-align: left;
-            box-sizing: border-box;
-          }
-
-          .code-block-decoration pre {
-            white-space: pre-wrap;
-            word-break: break-word;
+            max-width: 500px;
+            margin: 0 auto;
           }
         }
 
         @media (max-width: 480px) {
           .hero-section {
-            padding-top: 80px;
+            padding-top: 90px;
           }
           
           .hero-title {
-            font-size: 2.2rem;
+            font-size: clamp(2rem, 12vw, 2.8rem);
           }
           
-          .hero-subtitle {
-            font-size: 1rem;
-          }
-          
-          .code-block-decoration {
-            padding: 1rem;
-            font-size: 0.72rem;
-            width: 100%;
-            max-width: 100%;
-            margin: 0;
-          }
-
           .hero-buttons {
+            flex-direction: column;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto 2rem;
             gap: 0.75rem;
           }
-
-          .hero-visual {
-            padding: 0;
+          
+          .btn {
             width: 100%;
+            justify-content: center;
+          }
+
+          .code-block-decoration {
+            padding: 1.25rem;
+            font-size: 0.75rem;
+          }
+
+          .code-header {
+            margin-bottom: 1rem;
+          }
+
+          .dot {
+            width: 10px;
+            height: 10px;
           }
         }
+
+
       `}</style>
     </section>
   );

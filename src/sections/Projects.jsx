@@ -175,8 +175,8 @@ const Projects = () => {
 
         .projects-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
         }
 
         .project-card {
@@ -184,7 +184,7 @@ const Projects = () => {
           border-radius: var(--border-radius-lg);
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.05);
-          transition: all 0.3s ease;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
           z-index: 1;
           display: flex;
@@ -193,7 +193,7 @@ const Projects = () => {
 
         .project-image {
           position: relative;
-          height: 200px;
+          height: 220px;
           overflow: hidden;
         }
 
@@ -201,7 +201,7 @@ const Projects = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.5s ease;
+          transition: transform 0.6s ease;
         }
 
         .project-card:hover .project-image img {
@@ -209,21 +209,21 @@ const Projects = () => {
         }
 
         .project-card:hover {
-          transform: translateY(-10px);
+          transform: translateY(-12px);
           border-color: var(--accent-primary);
-          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.3);
+          box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
         }
 
         .project-content {
-          padding: 1.5rem;
+          padding: 1.75rem;
           flex-grow: 1;
           display: flex;
           flex-direction: column;
         }
 
         .project-title {
-          font-size: 1.25rem;
-          margin-bottom: 0.5rem;
+          font-size: 1.3rem;
+          margin-bottom: 0.75rem;
           color: var(--text-primary);
           font-weight: 700;
         }
@@ -232,25 +232,25 @@ const Projects = () => {
           color: var(--text-secondary);
           margin-bottom: 1.5rem;
           font-size: 0.95rem;
-          line-height: 1.5;
+          line-height: 1.6;
           flex-grow: 1;
         }
 
         .project-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
+          gap: 0.6rem;
           margin-bottom: 1.5rem;
         }
 
         .project-tag {
           font-size: 0.75rem;
-          padding: 0.25rem 0.75rem;
-          background: var(--bg-secondary);
+          padding: 0.35rem 0.85rem;
+          background: rgba(255, 255, 255, 0.05);
           border-radius: 100px;
           color: var(--accent-secondary);
           border: 1px solid rgba(255,255,255,0.1);
-          font-weight: 500;
+          font-weight: 600;
         }
 
         .project-actions {
@@ -258,6 +258,7 @@ const Projects = () => {
           justify-content: space-between;
           align-items: center;
           margin-top: auto;
+          gap: 1rem;
         }
 
         .btn-link {
@@ -276,7 +277,7 @@ const Projects = () => {
 
         .btn-link:hover {
           color: var(--accent-secondary);
-          letter-spacing: 0.5px;
+          transform: translateX(3px);
         }
 
         .btn-github {
@@ -286,14 +287,14 @@ const Projects = () => {
           align-items: center;
           gap: 0.5rem;
           transition: 0.2s;
+          padding: 0.4rem 0.8rem;
+          background: rgba(255,255,255,0.05);
+          border-radius: var(--border-radius-sm);
         }
 
         .btn-github:hover {
           color: #fff;
-        }
-
-        .icon-sm {
-          font-size: 0.8rem;
+          background: rgba(255,255,255,0.1);
         }
 
         /* Modal Styles */
@@ -303,52 +304,59 @@ const Projects = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(5px);
-          z-index: 1000;
+          background: rgba(0, 0, 0, 0.9);
+          backdrop-filter: blur(10px);
+          z-index: 2000;
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 1rem;
+          padding: 1.5rem;
           animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
           background: var(--bg-card);
           width: 100%;
-          max-width: 600px;
+          max-width: 800px;
           border-radius: var(--border-radius-lg);
-          border: 1px solid var(--accent-primary);
+          border: 1px solid rgba(255,255,255,0.1);
           position: relative;
           overflow: hidden;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
         }
 
         .modal-close {
           position: absolute;
-          top: 1rem;
-          right: 1rem;
-          background: rgba(0,0,0,0.5);
+          top: 1.25rem;
+          right: 1.25rem;
+          background: rgba(0,0,0,0.6);
           border: none;
           color: white;
-          width: 32px;
-          height: 32px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           cursor: pointer;
-          z-index: 10;
+          z-index: 20;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: 0.2s;
+          transition: 0.3s;
+          backdrop-filter: blur(5px);
         }
 
         .modal-close:hover {
           background: var(--error);
+          transform: rotate(90deg);
         }
 
         .modal-image {
-          height: 250px;
+          height: 350px;
+          min-height: 350px;
           overflow: hidden;
+          width: 100%;
         }
 
         .modal-image img {
@@ -358,18 +366,20 @@ const Projects = () => {
         }
 
         .modal-body {
-          padding: 2rem;
+          padding: 2.5rem;
+          overflow-y: auto;
         }
 
         .modal-body h3 {
-          font-size: 1.8rem;
+          font-size: clamp(1.5rem, 4vw, 2rem);
           color: var(--text-primary);
-          margin-bottom: 1rem;
+          margin-bottom: 1.25rem;
+          font-weight: 800;
         }
 
         .modal-desc {
           font-size: 1rem;
-          line-height: 1.6;
+          line-height: 1.7;
           color: var(--text-secondary);
           margin-bottom: 2rem;
         }
@@ -377,24 +387,26 @@ const Projects = () => {
         .modal-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
-          margin-bottom: 1.5rem;
+          gap: 0.75rem;
+          margin-bottom: 2rem;
         }
 
         .btn-primary-sm {
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
-          background: var(--accent-primary);
+          gap: 0.75rem;
+          background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
           color: white;
-          padding: 0.5rem 1rem;
-          border-radius: var(--border-radius-sm);
-          font-size: 0.9rem;
-          transition: 0.2s;
+          padding: 0.8rem 1.5rem;
+          border-radius: var(--border-radius-md);
+          font-size: 1rem;
+          font-weight: 600;
+          transition: 0.3s;
         }
 
         .btn-primary-sm:hover {
-          background: var(--accent-secondary);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px var(--accent-glow);
         }
 
         @keyframes fadeIn {
@@ -402,52 +414,67 @@ const Projects = () => {
           to { opacity: 1; }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
           .projects-grid {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
           }
 
           .modal-content {
-            max-height: 90vh;
-            overflow-y: auto;
+            max-width: 600px;
           }
 
           .modal-image {
-            height: 200px;
+            height: 250px;
+            min-height: 250px;
           }
+        }
 
+        @media (max-width: 768px) {
           .modal-body {
-            padding: 1.5rem;
-          }
-
-          .modal-body h3 {
-            font-size: 1.5rem;
+            padding: 1.75rem;
           }
         }
 
         @media (max-width: 480px) {
           .projects-grid {
             grid-template-columns: 1fr;
+            max-width: 320px;
+            margin: 0 auto;
           }
 
-          .modal-content {
-            width: 95%;
+          .project-image {
+            height: 200px;
+          }
+
+          .modal-overlay {
+            padding: 1rem;
           }
 
           .modal-image {
-            height: 180px;
+            height: 200px;
+            min-height: 200px;
           }
 
           .modal-body {
-            padding: 1.25rem;
+            padding: 1.5rem;
           }
 
           .modal-desc {
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+          }
+
+          .project-actions {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .btn-github {
+            width: 100%;
+            justify-content: center;
           }
         }
+
       `}</style>
     </section>
   );

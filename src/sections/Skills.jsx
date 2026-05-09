@@ -104,7 +104,7 @@ const Skills = () => {
 
         .skills-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 1.5rem;
           position: relative;
           z-index: 1;
@@ -113,10 +113,12 @@ const Skills = () => {
         .skill-card {
           background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(10px);
-          padding: 1.5rem;
+          padding: 2rem;
           border-radius: var(--border-radius-lg);
           border: 1px solid rgba(255,255,255,0.05);
           transition: all 0.4s ease;
+          display: flex;
+          flex-direction: column;
         }
 
         .skill-card:hover {
@@ -129,18 +131,18 @@ const Skills = () => {
         .card-header {
           display: flex;
           align-items: center;
-          gap: 0.8rem;
+          gap: 1rem;
           margin-bottom: 1.5rem;
-          padding-bottom: 0.8rem;
+          padding-bottom: 1rem;
           border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .cat-icon {
-          font-size: 1.25rem;
+          font-size: 1.5rem;
           color: var(--accent-secondary);
           background: rgba(255,255,255,0.05);
-          padding: 0.6rem;
-          border-radius: 10px;
+          padding: 0.75rem;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -154,24 +156,24 @@ const Skills = () => {
         }
 
         .skill-category {
-          font-size: 1.2rem;
+          font-size: clamp(1.2rem, 3vw, 1.4rem);
           color: var(--text-primary);
-          font-weight: 600;
+          font-weight: 700;
         }
 
         .skill-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.6rem;
+          gap: 0.75rem;
         }
 
         .skill-tag {
           background: var(--bg-secondary);
-          padding: 0.4rem 0.8rem;
+          padding: 0.5rem 1rem;
           border-radius: 50px;
           font-size: 0.85rem;
           color: var(--text-secondary);
-          border: 1px solid transparent;
+          border: 1px solid rgba(255, 255, 255, 0.05);
           transition: all 0.3s ease;
           font-weight: 500;
         }
@@ -185,29 +187,28 @@ const Skills = () => {
 
         @media (max-width: 768px) {
           .skills-grid {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
           }
 
           .skill-card {
-            padding: 1.25rem;
-          }
-
-          .skill-category {
-            font-size: 1.1rem;
+            padding: 1.5rem;
           }
         }
 
         @media (max-width: 480px) {
           .skills-grid {
             grid-template-columns: 1fr;
+            max-width: 320px;
+            margin: 0 auto;
           }
 
           .skill-tag {
             font-size: 0.8rem;
-            padding: 0.3rem 0.6rem;
+            padding: 0.4rem 0.8rem;
           }
         }
+
       `}</style>
     </section>
   );

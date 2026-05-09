@@ -206,11 +206,11 @@ const About = () => {
 
         .about-image-card {
           position: relative;
-          width: 360px; /* Increased size */
-          height: 360px; /* Increased size */
+          width: clamp(280px, 40vw, 360px);
+          height: clamp(280px, 40vw, 360px);
           margin: 0 auto;
           border-radius: 50%;
-          padding: 0; /* Removed padding/border */
+          padding: 0;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
           display: flex;
           justify-content: center;
@@ -238,7 +238,7 @@ const About = () => {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center 20%; /* Adjusted to show more of the head */
+          object-position: center 20%;
           transition: transform 0.5s ease;
         }
 
@@ -258,7 +258,7 @@ const About = () => {
           border-radius: var(--border-radius-lg);
           text-align: center;
           transition: all 0.3s ease;
-          border: none; /* Removed border */
+          border: 1px solid rgba(255, 255, 255, 0.05);
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -269,11 +269,12 @@ const About = () => {
           transform: translateY(-5px);
           border-color: var(--accent-primary);
           box-shadow: 0 10px 20px -5px rgba(109, 40, 217, 0.3);
+          background: rgba(255, 255, 255, 0.05);
         }
 
         .stat-number {
           display: block;
-          font-size: 2.2rem;
+          font-size: clamp(1.5rem, 4vw, 2.2rem);
           font-weight: 800;
           color: var(--accent-primary);
           margin-bottom: 0.25rem;
@@ -282,63 +283,16 @@ const About = () => {
 
         .stat-label {
           color: var(--text-secondary);
-          font-size: 0.75rem;
+          font-size: clamp(0.65rem, 2vw, 0.75rem);
           text-transform: uppercase;
           letter-spacing: 1.5px;
           font-weight: 600;
         }
 
-        @media (max-width: 992px) {
-          .about-content {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-          }
-          
-          .about-right {
-            max-width: 100%;
-            margin: 0 auto;
-          }
-
-          .about-image-card {
-            width: 300px;
-            height: 300px;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .about-stats {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-          }
-          
-          .bio-card, .education-card {
-            padding: 1.5rem;
-          }
-
-          .about-title {
-            font-size: 2.5rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .about-image-card {
-            width: 240px;
-            height: 240px;
-          }
-
-          .about-stats {
-            grid-template-columns: 1fr;
-          }
-
-          .stat-number {
-            font-size: 1.8rem;
-          }
-        }
-
         .about-title {
           font-family: 'Dancing Script', cursive;
           font-style: italic;
-          font-size: 3rem;
+          font-size: clamp(2.5rem, 8vw, 3.5rem);
           letter-spacing: 1px;
           text-shadow: 2px 2px 15px rgba(109, 40, 217, 0.5);
           background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
@@ -347,6 +301,57 @@ const About = () => {
           display: inline-block;
           margin-bottom: 3rem;
         }
+
+        @media (max-width: 992px) {
+          .about-content {
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            text-align: center;
+          }
+          
+          .about-right {
+            max-width: 500px;
+            margin: 0 auto;
+          }
+
+          .about-lead {
+            font-size: 1.15rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .about-stats {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+          }
+          
+          .stat-item {
+            padding: 1.25rem 0.75rem;
+          }
+
+          .bio-card, .education-card {
+            padding: 1.5rem;
+            text-align: left;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .about-image-card {
+            width: 220px;
+            height: 220px;
+          }
+
+          .about-stats {
+            grid-template-columns: 1fr;
+            max-width: 280px;
+            margin: 0 auto;
+          }
+
+          .stat-item {
+            padding: 1rem;
+          }
+        }
+
       `}</style>
     </section>
   );

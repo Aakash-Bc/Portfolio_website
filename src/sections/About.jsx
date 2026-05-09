@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import profileImg from '../assets/Profile.jpeg';
+import cvPdf from '../assets/Aakash_Budhathoki_CV.pdf';
 
 const About = () => {
   return (
@@ -66,6 +67,19 @@ const About = () => {
                     <span className="year">Graduated 2022</span>
                   </div>
                 </div>
+              </div>
+
+              <div className="cv-buttons-group">
+                <a 
+                  href={cvPdf} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-cv-small view"
+                >
+                  <span className="cv-icon-small">👁️</span>
+                  View CV
+                </a>
+            
               </div>
             </motion.div>
           </div>
@@ -282,6 +296,55 @@ const About = () => {
           border-radius: 20px;
           width: fit-content;
           border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cv-buttons-group {
+          margin-top: 2rem;
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .btn-cv-small {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0.6rem 1.2rem;
+          border-radius: var(--border-radius-sm);
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          font-size: 0.85rem;
+          border: 1px solid transparent;
+        }
+
+        .btn-cv-small.view {
+          background: rgba(255, 255, 255, 0.05);
+          color: var(--text-primary);
+          border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-cv-small.view:hover {
+          background: rgba(255, 255, 255, 0.1);
+          border-color: var(--accent-primary);
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-cv-small.download {
+          background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+          color: white;
+          box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        .btn-cv-small.download:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px var(--accent-glow);
+          filter: brightness(1.1);
+        }
+
+        .cv-icon-small {
+          font-size: 1rem;
         }
         
         .about-right {

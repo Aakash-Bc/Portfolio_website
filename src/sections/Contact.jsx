@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhoneAlt, FaViber, FaMapMarkerAlt } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
 import contactBg from '../assets/contact-bg.png';
 
@@ -11,6 +10,7 @@ const Contact = () => {
     email: '',
     phone: '',
     address: '',
+    enquiryType: 'General Inquiry',
     message: '',
     honeypot: '' // Spam protection
   });
@@ -18,11 +18,6 @@ const Contact = () => {
   const [errors, setErrors] = React.useState({});
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [sending, setSending] = React.useState(false);
-
-  // EmailJS credentials
-  const SERVICE_ID = "service_3xdm2jb";
-  const TEMPLATE_ID = "template_3qjkbqg";
-  const PUBLIC_KEY = "sTPSxxo7KuJ6Qf8BU";
 
   // Validation
   const validate = () => {
@@ -62,14 +57,14 @@ const Contact = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: null }));
   };
 
-  // Form submit handler using EmailJS
+  // Form submit handler using Web3Forms
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // 🛡️ Honeypot Check (Spam protection)
     if (formData.honeypot) {
       console.log("Spam detected!");
-      return; // Silently ignore bot submissions
+      return;
     }
 
     if (!validate()) {
@@ -81,35 +76,43 @@ const Contact = () => {
     const loadingToast = toast.loading("Sending your message...");
 
     try {
-      const templateParams = {
+      // Prepare data for Web3Forms
+      // Get your free access key at: https://web3forms.com/
+      const web3Data = {
+        access_key: "dfa0bd7e-afa0-400c-86c1-1cb2597f1896", // 🔑 Updated with your key
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         address: formData.address,
+        enquiry_type: formData.enquiryType,
         message: formData.message,
-        to_name: "Aakash",
-        reply_to: formData.email, // 📩 Important for Auto-reply mapping in EmailJS
+        subject: `[${formData.enquiryType}] New Contact from ${formData.name}`,
+        from_name: "Portfolio Website",
       };
 
-      const result = await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        templateParams,
-        { publicKey: PUBLIC_KEY }
-      );
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(web3Data),
+      });
 
-      console.log("EmailJS Success:", result.status, result.text);
+      const result = await response.json();
 
-      toast.success("Message sent successfully!", { id: loadingToast });
-      setShowSuccess(true);
-      setFormData({ name: '', email: '', phone: '', address: '', message: '', honeypot: '' });
-
-      setTimeout(() => setShowSuccess(false), 5000);
+      if (result.success) {
+        toast.success("Message sent! I'll get back to you soon.", { id: loadingToast });
+        setShowSuccess(true);
+        setFormData({ name: '', email: '', phone: '', address: '', enquiryType: 'General Inquiry', message: '', honeypot: '' });
+        setTimeout(() => setShowSuccess(false), 8000);
+      } else {
+        throw new Error(result.message || "Something went wrong");
+      }
 
     } catch (error) {
-      console.error("EmailJS Error details:", error);
-      const errorMsg = error?.text || error?.message || (typeof error === 'string' ? error : "Failed to send message.");
-      toast.error(`Error: ${errorMsg}`, { id: loadingToast });
+      console.error("Submission Error:", error);
+      toast.error(`Error: ${error.message}`, { id: loadingToast });
     } finally {
       setSending(false);
     }
@@ -191,53 +194,75 @@ const Contact = () => {
 
           {showSuccess && (
             <div className="success-message">
-              Thank you! Your message has been sent successfully.
+              Thank you! Your message has been sent successfully. <br />
+              <span style={{ fontSize: '0.9rem', opacity: 0.9 }}>I usually respond within 2 hours to 1 day.</span>
             </div>
           )}
 
-          <div className="form-group">
-            <label htmlFor="name">Name <span className="required">*</span></label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={handleChange}
-              className={errors.name ? 'error-input' : ''}
-              required
-            />
-            {errors.name && <span className="error-text">{errors.name}</span>}
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="name">Name <span className="required">*</span></label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                className={errors.name ? 'error-input' : ''}
+                required
+              />
+              {errors.name && <span className="error-text">{errors.name}</span>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email <span className="required">*</span></label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="your@email.com"
+                value={formData.email}
+                onChange={handleChange}
+                className={errors.email ? 'error-input' : ''}
+                required
+              />
+              {errors.email && <span className="error-text">{errors.email}</span>}
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email <span className="required">*</span></label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="your@email.com"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? 'error-input' : ''}
-              required
-            />
-            {errors.email && <span className="error-text">{errors.email}</span>}
-          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="phone">Phone Number <span className="required">*</span></label>
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                placeholder="98XXXXXXXX"
+                value={formData.phone}
+                onChange={handleChange}
+                className={errors.phone ? 'error-input' : ''}
+                required
+              />
+              {errors.phone && <span className="error-text">{errors.phone}</span>}
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="phone">Phone Number <span className="required">*</span></label>
-            <input
-              type="tel"
-              name="phone"
-              id="phone"
-              placeholder="98XXXXXXXX"
-              value={formData.phone}
-              onChange={handleChange}
-              className={errors.phone ? 'error-input' : ''}
-              required
-            />
-            {errors.phone && <span className="error-text">{errors.phone}</span>}
+            <div className="form-group">
+              <label htmlFor="enquiryType">Enquiry Type</label>
+              <select
+                name="enquiryType"
+                id="enquiryType"
+                value={formData.enquiryType}
+                onChange={handleChange}
+              >
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Project Proposal">Project Proposal</option>
+                <option value="Freelance Work">Freelance Work</option>
+                <option value="Job Opportunity">Job Opportunity</option>
+                <option value="Collaboration">Collaboration</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
 
           <div className="form-group">
@@ -257,7 +282,7 @@ const Contact = () => {
             <textarea
               name="message"
               id="message"
-              rows="5"
+              rows="4"
               placeholder="Your Message..."
               value={formData.message}
               onChange={handleChange}
@@ -285,15 +310,17 @@ const Contact = () => {
         .icon-box { font-size: 1.4rem; color: var(--accent-primary); display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 50%; transition: all 0.3s ease; flex-shrink: 0; }
         .info-item:hover .icon-box { background: var(--accent-primary); color: white; box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.1); }
         .contact-form { background: var(--bg-card); padding: 2.5rem; border-radius: var(--border-radius-lg); border: 1px solid rgba(255,255,255,0.05); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: var(--bg-primary); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-sm); color: var(--text-primary); font-family: var(--font-sans); transition: 0.2s; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 2px var(--accent-glow); }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.8rem; background: var(--bg-primary); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-sm); color: var(--text-primary); font-family: var(--font-sans); transition: 0.2s; }
+        .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; background-size: 1em; padding-right: 2.5rem; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 2px var(--accent-glow); }
         .form-title { font-family: 'Dancing Script', cursive; font-size: 2.5rem; text-align: center; margin-bottom: 2rem; background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; color: transparent; text-shadow: 2px 2px 10px rgba(109, 40, 217, 0.3); }
         .form-group input.error-input, .form-group textarea.error-input { border-color: var(--error); }
         .error-text { color: var(--error); font-size: 0.8rem; margin-top: 0.3rem; display: block; }
         .required { color: var(--error); }
-        .success-message { background: rgba(34,197,94,0.1); color: var(--success); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--success); margin-bottom: 2rem; text-align: center; font-weight: 600; }
+        .success-message { background: rgba(34,197,94,0.1); color: var(--success); padding: 1rem; border-radius: var(--border-radius-sm); border: 1px solid var(--success); margin-bottom: 2rem; text-align: center; font-weight: 600; line-height: 1.4; }
         @media (max-width: 1024px) {
           .contact-container {
             gap: 2rem;
@@ -304,6 +331,11 @@ const Contact = () => {
           .contact-container {
             grid-template-columns: 1fr;
             gap: 3rem;
+          }
+
+          .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
           }
 
           .contact-text {

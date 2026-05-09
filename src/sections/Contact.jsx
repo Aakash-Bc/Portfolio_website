@@ -192,13 +192,6 @@ const Contact = () => {
             />
           </div>
 
-          {showSuccess && (
-            <div className="success-message">
-              Thank you! Your message has been sent successfully. <br />
-              <span style={{ fontSize: '0.9rem', opacity: 0.9 }}>I usually respond within 2 hours to 1 day.</span>
-            </div>
-          )}
-
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="name">Name <span className="required">*</span></label>
@@ -295,6 +288,13 @@ const Contact = () => {
           <button type="submit" className="btn btn-primary" disabled={sending}>
             {sending ? "Sending..." : "Send Message"}
           </button>
+
+          {showSuccess && (
+            <div className="success-message" style={{ marginTop: '1.5rem', marginBottom: '0' }}>
+              Thank you! Your message has been sent successfully. <br />
+              <span style={{ fontSize: '0.9rem', opacity: 0.9 }}>I usually respond within 2 hours to 1 day.</span>
+            </div>
+          )}
         </motion.form>
       </div>
 

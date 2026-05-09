@@ -90,7 +90,10 @@ const Hero = () => {
               <code>
                 <span className="keyword">const</span> developer = {'{'}
                 {'\n'}  name: <span className="string">'Aakash'</span>,
-                {'\n'}  skills: [<span className="string">'React'</span>, <span className="string">'Express.js'</span>, <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>],
+                {'\n'}  skills: [
+                {'\n'}    <span className="string">'React'</span>, <span className="string">'Express.js'</span>,
+                {'\n'}    <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>
+                {'\n'}  ],
                 {'\n'}  hardWorker: <span className="boolean">true</span>,
                 {'\n'}  openToWork: <span className="boolean">true</span>
                 {'\n'}{'}'}
@@ -134,6 +137,10 @@ const Hero = () => {
           grid-template-columns: 1fr 1fr;
           gap: 4rem;
           align-items: center;
+          width: 100%;
+          max-width: var(--container-width);
+          margin: 0 auto;
+          padding: 0 2rem;
         }
 
         .greeting {
@@ -149,6 +156,7 @@ const Hero = () => {
           line-height: 1.05;
           margin-bottom: 1.5rem;
           font-weight: 800;
+          word-break: keep-all;
         }
 
         .hero-subtitle {
@@ -177,6 +185,7 @@ const Hero = () => {
           display: flex;
           justify-content: center;
           align-items: center;
+          width: 100%;
         }
 
         .glow-circle {
@@ -203,6 +212,7 @@ const Hero = () => {
           position: relative;
           width: 100%;
           max-width: 520px;
+          overflow: hidden;
         }
 
         .code-header {
@@ -227,6 +237,7 @@ const Hero = () => {
           scrollbar-width: thin;
           scrollbar-color: var(--bg-card) transparent;
           font-size: inherit;
+          white-space: pre;
         }
 
         .code-block-decoration pre::-webkit-scrollbar {
@@ -281,7 +292,13 @@ const Hero = () => {
           }
           
           .hero-title {
-            font-size: clamp(2rem, 12vw, 2.8rem);
+            font-size: clamp(1.8rem, 10vw, 2.5rem);
+            margin-bottom: 1rem;
+          }
+
+          .hero-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
           }
           
           .hero-buttons {
@@ -299,7 +316,8 @@ const Hero = () => {
 
           .code-block-decoration {
             padding: 1.25rem;
-            font-size: 0.75rem;
+            font-size: clamp(0.65rem, 3.5vw, 0.8rem);
+            max-width: 100%;
           }
 
           .code-header {

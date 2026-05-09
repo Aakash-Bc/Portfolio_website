@@ -90,10 +90,8 @@ const Hero = () => {
               <code>
                 <span className="keyword">const</span> developer = {'{'}
                 {'\n'}  name: <span className="string">'Aakash'</span>,
-                {'\n'}  skills: [
-                {'\n'}    <span className="string">'React'</span>, <span className="string">'Express.js'</span>,
-                {'\n'}    <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>
-                {'\n'}  ],
+                {'\n'}  skills: [<span className="string">'React'</span>, <span className="string">'Express.js'</span>,
+                {'\n'}           <span className="string">'Node.js'</span>, <span className="string">'MongoDB'</span>],
                 {'\n'}  hardWorker: <span className="boolean">true</span>,
                 {'\n'}  openToWork: <span className="boolean">true</span>
                 {'\n'}{'}'}
@@ -202,7 +200,7 @@ const Hero = () => {
         .code-block-decoration {
           background: rgba(20, 20, 22, 0.8);
           backdrop-filter: blur(12px);
-          padding: 2rem;
+          padding: 1.5rem 2rem;
           border-radius: var(--border-radius-md);
           border: 1px solid rgba(255,255,255,0.1);
           font-family: 'Fira Code', monospace;
@@ -211,7 +209,7 @@ const Hero = () => {
           transition: all 0.3s ease;
           position: relative;
           width: 100%;
-          max-width: 520px;
+          max-width: 500px;
           overflow: hidden;
         }
 
